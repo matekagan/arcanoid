@@ -13,9 +13,14 @@ class Ball extends GameElement {
         this.context.beginPath();
         this.context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false);
         this.context.fillStyle = this.color;
-        // this.context.closePath();
         this.context.fill();
         this.context.fillStyle = oldColor;
+    }
+
+    clear = () => {
+        this.context.beginPath();
+        this.context.arc(this.x, this.y, this.radius + 1, 0, 2 * Math.PI, false);
+        this.context.fill();
     }
 
     boundsCollision = (maxX) => {

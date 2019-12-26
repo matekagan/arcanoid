@@ -5,10 +5,13 @@ class GameElement {
         this.color = color;
     }
 
-    draw() {
+    draw = () => {
     }
 
-    setContext(context) {
+    clear = (width, height) => {
+    }
+
+    setContext = (context) => {
         this.context = context;
     }
 }

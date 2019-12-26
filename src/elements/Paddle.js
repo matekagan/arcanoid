@@ -10,11 +10,15 @@ class Paddle extends GameElement {
         this.height = height;
     }
 
-    draw() {
+    draw = () => {
         const oldColor = this.context.fillStyle;
         this.context.fillStyle = this.color;
         this.context.fillRect(this.x, this.y, this.width, this.height);
         this.context.fillStyle = oldColor;
+    }
+
+    clear = (width) => {
+        this.context.fillRect(0, this.y, width, this.height);
     }
 
     checkColision(ball) {

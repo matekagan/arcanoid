@@ -8,15 +8,18 @@ class Block extends GameElement {
         this.height = height;
     }
 
-    draw() {
+    draw = () => {
         const oldColor = this.context.fillStyle;
-        // this.context.beginPath();
         this.context.fillStyle = this.color;
         this.context.fillRect(this.x, this.y, this.width, this.height);
         this.context.fillStyle = oldColor;
     }
 
-    checkColision(ball) {
+    clear = () => {
+        this.context.fillRect(this.x, this.y, this.width, this.height);
+    }
+
+    checkColision = (ball) => {
         const { x: ballX, y: ballY, radius } = ball;
 
         if (this.x - radius >= ballX || this.x + this.width + radius <= ballX) {
