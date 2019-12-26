@@ -16,7 +16,7 @@ class Game extends React.Component {
         this.state = {
             paddle: new Paddle({ x: (this.width / 2) - 75, y: this.height - 25, color: '#DDDDDD', width: 150, height: 15 }),
             blocks: [],
-            ball: new Ball({ x: (this.width / 2), y: this.height - 25, color: '#FF0000', radius: 7, direction: { dx: 5, dy: -7 } }),
+            ball: new Ball({ x: (this.width / 2), y: this.height - 25, color: '#FF0000', radius: 7, direction: { dx: 0, dy: -7 } }),
             boardRect: new Block({ x: 0, y: 0, color: BOARD_COLOR, width, height })
         };
     }
@@ -29,6 +29,9 @@ class Game extends React.Component {
 
     calculatePositions = () => {
         const { ball, paddle } = this.state;
+        if (ball.shouldFail(this.height)) {
+            this.props.finishGame();
+        }
         ball.boundsCollision(this.width);
         paddle.checkColision(ball);
         ball.clear();
@@ -66,9 +69,13 @@ class Game extends React.Component {
         this.interval = setInterval(this.calculatePositions, 1000 / this.fps);
     }
 
+    componentWillUnmount() {
+        clearInterval(this.interval);
+    }
+
     render() {
         return (
-            <div className="gameContainer">
+            <div className="centeredContainer">
                 <canvas
                     className="game"
                     width={this.width}

@@ -1,0 +1,19 @@
+.centeredContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.app {
+    width: 100vp;
+    height: 100vp;
+}
+
+.button {
+    background: purple;
+    border: none;
+    border-bottom: .3rem solid darken(purple, 10);
+    font-weight: 500;
+    padding: $s-size;    
+}

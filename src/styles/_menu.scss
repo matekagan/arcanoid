@@ -1,0 +1,21 @@
+.menu {
+    height: 20vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+
+.menuItem {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.menuButton {
+    color: whitesmoke;
+    width: 150px;
+    &:hover {
+        background-color: lighten(purple, 10);
+    }
+}
