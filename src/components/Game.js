@@ -2,6 +2,7 @@ import React from 'react';
 import Paddle from '../elements/Paddle';
 import Ball from '../elements/Ball';
 import Block from '../elements/Block';
+import * as BoardHelper from '../utils/boardHelper';
 
 const BOARD_COLOR = '#404040';
 
@@ -15,7 +16,7 @@ class Game extends React.Component {
         this.board = React.createRef();
         this.state = {
             paddle: new Paddle({ x: (this.width / 2) - 75, y: this.height - 25, color: '#DDDDDD', width: 150, height: 15 }),
-            blocks: [],
+            blocks: BoardHelper.prepareBlocks(width, height),
             ball: new Ball({ x: (this.width / 2), y: this.height - 25, color: '#FF0000', radius: 7, direction: { dx: 0, dy: -7 } }),
             boardRect: new Block({ x: 0, y: 0, color: BOARD_COLOR, width, height })
         };
@@ -28,12 +29,14 @@ class Game extends React.Component {
     }
 
     calculatePositions = () => {
-        const { ball, paddle } = this.state;
-        if (ball.shouldFail(this.height)) {
+        const { ball, paddle, blocks } = this.state;
+        const visibleBlocks = blocks.filter(block => block.visible);
+        if (ball.shouldFail(this.height) || visibleBlocks.length === 0) {
             this.props.finishGame();
         }
         ball.boundsCollision(this.width);
         paddle.checkColision(ball);
+        blocks.forEach(block => block.checkColision(ball) && block.clear());
         ball.clear();
         paddle.clear(this.width);
         ball.move();
@@ -66,6 +69,7 @@ class Game extends React.Component {
         ball.setContext(ctx);
         blocks.forEach(block => block.setContext(ctx));
         boardRect.draw();
+        blocks.forEach(block => block.draw());
         this.interval = setInterval(this.calculatePositions, 1000 / this.fps);
     }
 

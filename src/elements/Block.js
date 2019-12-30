@@ -6,6 +6,7 @@ class Block extends GameElement {
         const { width = 100, height = 20 } = params;
         this.width = width;
         this.height = height;
+        this.visible = true;
     }
 
     draw = () => {
@@ -26,6 +27,7 @@ class Block extends GameElement {
             return false;
         }
         if (this.y <= ballY && this.y + this.height >= ballY) {
+            this.visible = false;
             return true;
         }
 
