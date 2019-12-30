@@ -11,7 +11,7 @@ export const prepareBlocks = (width, height, numberOfRows = DEFAULT_NUMBER_OF_RO
     const blocks = [];
     for (let i = 0; i < numberOfRows; i += 1) {
         const rowYpos = yOffset + i * (BLOCK_HEIGHT + 5);
-        blocks.push(...prepareBlockRow(width, rowYpos, 'red'));
+        blocks.push(...prepareBlockRow(width, rowYpos, 'green'));
     }
     return blocks;
 };

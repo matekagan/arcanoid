@@ -21,7 +21,7 @@ class Paddle extends GameElement {
         this.context.fillRect(0, this.y, width, this.height);
     }
 
-    checkColision(ball) {
+    ballCollision(ball) {
         const { direction: { dy, dx }, x: ballX, y: ballY, radius } = ball;
         if (dy <= 0) {
             return;
