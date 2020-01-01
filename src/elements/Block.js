@@ -23,10 +23,10 @@ class Block extends GameElement {
     checkColision = (ball) => {
         const { x: ballX, y: ballY, radius } = ball;
 
-        if (this.x - radius >= ballX || this.x + this.width + radius <= ballX) {
+        if (ballX <= this.x - radius || ballX >= this.x + this.width + radius) {
             return false;
         }
-        if (this.y <= ballY && this.y + this.height >= ballY) {
+        if (ballY >= this.y - radius && ballY <= this.y + this.height + radius) {
             this.visible = false;
             return true;
         }
