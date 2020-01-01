@@ -55,6 +55,6 @@
               "render"
             ]
           }],
-         "react/jsx-boolean-value": "always" 
+         "react/jsx-boolean-value": "off" 
     }
 }
