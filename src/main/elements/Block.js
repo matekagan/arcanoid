@@ -33,6 +33,10 @@ class Block extends GameElement {
 
         return false;
     }
+
+    ballCollision(ball) {
+
+    }
 }
 
 export default Block;

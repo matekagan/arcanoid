@@ -1,5 +1,5 @@
 {
-    "name": "Arcanoid",
+    "name": "arcanoid",
     "version": "1.0.0",
     "main": "index.js",
     "author": "Mateusz Kagan",
@@ -7,7 +7,8 @@
     "scripts": {
         "serve": "live-server public",
         "build": "webpack",
-        "dev": "webpack-dev-server"
+        "dev": "webpack-dev-server",
+        "test": "jest"
     },
     "dependencies": {
         "babel-cli": "^6.24.0",
@@ -30,6 +31,7 @@
         "webpack-dev-server": "^2.5.1"
     },
     "devDependencies": {
+        "@types/jest": "^23.3.5",
         "babel-eslint": "^8.2.6",
         "eslint": "^6.8.0",
         "eslint-config-airbnb": "^16.1.0",
@@ -38,6 +40,8 @@
         "eslint-plugin-import": "^2.7.0",
         "eslint-plugin-jsx-a11y": "^6.0.1",
         "eslint-plugin-react": "^7.4.0",
+        "eslint-plugin-jest": "^21.24.1",
+        "jest": "20.0.4",
         "webpack-cli": "^3.3.10"
     }
 }
