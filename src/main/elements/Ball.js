@@ -3,9 +3,10 @@ import GameElement from './Element';
 class Ball extends GameElement {
     constructor(params) {
         super(params);
-        const { radius = 10, direction = { dx: 0, dy: 0 } } = params;
+        const { radius = 10, dx = 0, dy = 0 } = params;
         this.radius = radius;
-        this.direction = direction;
+        this.dx = dx;
+        this.dy = dy;
     }
 
     draw = () => {
@@ -24,31 +25,35 @@ class Ball extends GameElement {
     }
 
     boundsCollision = (maxX) => {
-        if (this.x - this.radius <= maxX && this.x + this.radius >= maxX && this.direction.dx > 0) {
-            this.direction.dx *= -1;
+        const left = this.radius;
+        const right = maxX - this.radius;
+        const top = this.radius;
+
+        if ((this.x < left && this.dx < 0) || (this.x > right && this.dx > 0)) {
+            this.dx *= -1;
         }
-        if (this.y - this.radius <= 0 && this.y + this.radius >= 0 && this.direction.dy < 0) {
-            this.direction.dy *= -1;
-        }
-        if (this.x - this.radius <= 0 && this.x + this.radius >= 0 && this.direction.dx < 0) {
-            this.direction.dx *= -1;
+
+        if (this.y < top) {
+            this.dy *= -1;
         }
     }
 
     shouldFail = (maxY) => {
-        if (this.y - this.radius <= maxY && this.y + this.radius >= maxY && this.direction.dy > 0) {
+        const bottom = maxY - this.radius;
+        if (this.y > bottom) {
             return true;
         }
         return false;
     }
 
     changeDirection = (dx, dy) => {
-        this.direction = { dx, dy };
+        this.dx = dx;
+        this.dy = dy;
     }
 
     move = () => {
-        this.x += this.direction.dx;
-        this.y += this.direction.dy;
+        this.x += this.dx;
+        this.y += this.dy;
     }
 }
 

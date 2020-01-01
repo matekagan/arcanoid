@@ -8,7 +8,7 @@ class GameElement {
     draw = () => {
     }
 
-    clear = (width, height) => {
+    clear = () => {
     }
 
     setContext = (context) => {

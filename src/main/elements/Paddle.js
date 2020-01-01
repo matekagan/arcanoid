@@ -22,7 +22,7 @@ class Paddle extends GameElement {
     }
 
     ballCollision(ball) {
-        const { direction: { dy, dx }, x: ballX, y: ballY, radius } = ball;
+        const { dy, dx, x: ballX, y: ballY, radius } = ball;
         if (dy <= 0) {
             return;
         }

@@ -20,22 +20,28 @@ class Block extends GameElement {
         this.context.fillRect(this.x, this.y, this.width, this.height);
     }
 
-    checkColision = (ball) => {
-        const { x: ballX, y: ballY, radius } = ball;
-
-        if (ballX <= this.x - radius || ballX >= this.x + this.width + radius) {
-            return false;
-        }
-        if (ballY >= this.y - radius && ballY <= this.y + this.height + radius) {
-            this.visible = false;
-            return true;
-        }
-
-        return false;
-    }
-
     ballCollision(ball) {
+        const { x: ballX, y: ballY, radius, dx, dy } = ball;
+        const left = this.x - radius;
+        const right = this.x + this.width + radius;
+        const top = this.y - radius;
+        const bottom = this.y + this.height + radius;
 
+        if (ballX < left || ballX > right || ballY < top || ballY > bottom) {
+            return;
+        }
+        this.visible = false;
+        this.clear();
+        const prevBallX = ballX - dx;
+        const prevBallY = ballY - dy;
+
+        if ((prevBallX < left || prevBallX > right) && prevBallY > top && prevBallY < bottom) {
+            ball.changeDirection(-dx, dy);
+        }
+
+        if ((prevBallY < top || prevBallY > bottom) && prevBallX > left && prevBallX < right) {
+            ball.changeDirection(dx, -dy);
+        }
     }
 }
 
