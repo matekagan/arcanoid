@@ -7,20 +7,21 @@ import * as BoardHelper from '../utils/boardHelper';
 const BOARD_COLOR = '#404040';
 const PADDLE_COLOR = '#DDDDDD';
 const BALL_COLOR = '#FF0000';
+const SCALE_FACTOR = 2;
 
 class Game extends React.Component {
     constructor(props) {
         super(props);
-        const { width = 800, height = 500, fps = 30 } = props;
+        const { width = 800, height = 500, fps = 60 } = props;
         this.width = width;
         this.height = height;
         this.fps = fps;
         this.board = React.createRef();
         this.state = {
             paddle: new Paddle({ x: (this.width / 2) - 75, y: this.height - 25, color: PADDLE_COLOR, width: 150, height: 15 }),
-            blocks: BoardHelper.prepareBlocks(width, height),
-            ball: new Ball({ x: (this.width / 2), y: this.height - 25, color: BALL_COLOR, radius: 7, dx: 0, dy: -7 }),
-            boardRect: new Block({ x: 0, y: 0, color: BOARD_COLOR, width, height })
+            blocks: BoardHelper.prepareBlocks(this.width, this.height),
+            ball: new Ball({ x: (this.width / 2), y: this.height - 25, color: BALL_COLOR, radius: 7, dx: 0, dy: -5 }),
+            boardRect: new Block({ x: 0, y: 0, color: BOARD_COLOR, width: this.width, height: this.height })
         };
     }
 
@@ -65,6 +66,7 @@ class Game extends React.Component {
     componentDidMount() {
         const ctx = this.board.current.getContext('2d');
         const { paddle, ball, blocks, boardRect } = this.state;
+        ctx.scale(SCALE_FACTOR, SCALE_FACTOR);
         ctx.fillStyle = BOARD_COLOR;
         boardRect.setContext(ctx);
         paddle.setContext(ctx);
@@ -84,8 +86,9 @@ class Game extends React.Component {
             <div className="centeredContainer">
                 <canvas
                     className="game"
-                    width={this.width}
-                    height={this.height}
+                    style={{ width: `${this.width}px`, height: `${this.height}px` }}
+                    width={this.width * SCALE_FACTOR}
+                    height={this.height * SCALE_FACTOR}
                     ref={this.board}
                     onMouseMove={this.handleMouseMove}
                 />
