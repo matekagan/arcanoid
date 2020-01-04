@@ -3,6 +3,7 @@ import Paddle from '../elements/Paddle';
 import Ball from '../elements/Ball';
 import Block from '../elements/Block';
 import * as BoardHelper from '../utils/boardHelper';
+import { GAME_STATUS, DIFFICULTY_VALUES, DIFFICULTY_LEVELS } from '../utils/gameHelpers';
 
 const BOARD_COLOR = '#404040';
 const PADDLE_COLOR = '#DDDDDD';
@@ -12,16 +13,36 @@ const SCALE_FACTOR = 2;
 class Game extends React.Component {
     constructor(props) {
         super(props);
-        const { width = 800, height = 500, fps = 60 } = props;
+        const { width = 800, height = 500, fps = 60, difficulty = DIFFICULTY_LEVELS.MEDIUM } = props;
+        const { paddleWidth, ballYSpeed } = DIFFICULTY_VALUES[difficulty];
         this.width = width;
         this.height = height;
         this.fps = fps;
         this.board = React.createRef();
         this.state = {
-            paddle: new Paddle({ x: (this.width / 2) - 75, y: this.height - 25, color: PADDLE_COLOR, width: 150, height: 15 }),
+            paddle: new Paddle({
+                x: (this.width / 2) - 75,
+                y: this.height - 25,
+                color: PADDLE_COLOR,
+                width: Math.round(paddleWidth * width),
+                height: 15
+            }),
             blocks: BoardHelper.prepareBlocks(this.width, this.height),
-            ball: new Ball({ x: (this.width / 2), y: this.height - 25, color: BALL_COLOR, radius: 7, dx: 0, dy: -5 }),
-            boardRect: new Block({ x: 0, y: 0, color: BOARD_COLOR, width: this.width, height: this.height })
+            ball: new Ball({
+                x: (this.width / 2),
+                y: this.height - 25,
+                color: BALL_COLOR,
+                radius: 7,
+                dx: 0,
+                dy: -ballYSpeed
+            }),
+            boardRect: new Block({
+                x: 0,
+                y: 0,
+                color: BOARD_COLOR,
+                width: this.width,
+                height: this.height
+            })
         };
     }
 
@@ -33,9 +54,11 @@ class Game extends React.Component {
 
     calculatePositions = () => {
         const { ball, paddle, blocks } = this.state;
-        const visibleBlocks = blocks.filter(block => block.visible);
-        if (ball.shouldFail(this.height) || visibleBlocks.length === 0) {
-            this.props.finishGame();
+        if (ball.shouldFail(this.height)) {
+            this.props.finishGame(GAME_STATUS.DEFEAT);
+        }
+        if (blocks.length === 0) {
+            this.props.finishGame(GAME_STATUS.WIN);
         }
         ball.boundsCollision(this.width);
         paddle.ballCollision(ball);
@@ -44,6 +67,7 @@ class Game extends React.Component {
         paddle.clear(this.width);
         ball.move();
         window.requestAnimationFrame(this.drawAll);
+        this.setState({ blocks: blocks.filter(block => block.visible) });
     }
 
     drawAll = () => {
