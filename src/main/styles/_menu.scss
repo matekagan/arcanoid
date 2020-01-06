@@ -1,18 +1,35 @@
+.menuWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .menu {
+    width: 200px;
+    height: 200px;
+    padding: 10px;
     height: 20vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
 
 .menuItem {
     width: 100%;
     display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.buttonsWrapper {
+    display: flex;
+    flex-direction: row;
     justify-content: space-around;
 }
 
 .menuButton {
+    margin: 5px;
     color: whitesmoke;
     width: 150px;
     &:hover {

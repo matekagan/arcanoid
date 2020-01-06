@@ -6,15 +6,15 @@ import * as BoardHelper from '../utils/boardHelper';
 import { GAME_STATUS, DIFFICULTY_VALUES, DIFFICULTY_LEVELS } from '../utils/gameHelpers';
 
 const BOARD_COLOR = '#404040';
-const PADDLE_COLOR = '#DDDDDD';
-const BALL_COLOR = '#FF0000';
+const PADDLE_COLOR = '#A5A5A5';
+const BALL_COLOR = 'whitesmoke';
 const SCALE_FACTOR = 2;
 
 class Game extends React.Component {
     constructor(props) {
         super(props);
-        const { width = 800, height = 500, fps = 60, difficulty = DIFFICULTY_LEVELS.MEDIUM } = props;
-        const { paddleWidth, ballYSpeed } = DIFFICULTY_VALUES[difficulty];
+        const { width = 800, height = 600, fps = 60, difficulty = DIFFICULTY_LEVELS.MEDIUM } = props;
+        const { paddleWidth, ballYSpeed, blockRows = 6 } = DIFFICULTY_VALUES[difficulty];
         this.width = width;
         this.height = height;
         this.fps = fps;
@@ -27,7 +27,7 @@ class Game extends React.Component {
                 width: Math.round(paddleWidth * width),
                 height: 15
             }),
-            blocks: BoardHelper.prepareBlocks(this.width, this.height),
+            blocks: BoardHelper.prepareBlocks(this.width, this.height, blockRows),
             ball: new Ball({
                 x: (this.width / 2),
                 y: this.height - 25,

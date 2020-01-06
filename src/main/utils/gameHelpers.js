@@ -17,14 +17,17 @@ export const DIFFICULTY_LEVELS = {
 export const DIFFICULTY_VALUES = {
     easy: {
         paddleWidth: 0.15,
-        ballYSpeed: 4
+        ballYSpeed: 4,
+        blockRows: 5
     },
     medium: {
-        paddleWidth: 0.11,
-        ballYSpeed: 6
+        paddleWidth: 0.12,
+        ballYSpeed: 6,
+        blockRows: 6
     },
     hard: {
-        paddleWidth: 0.08,
-        ballYSpeed: 8
+        paddleWidth: 0.1,
+        ballYSpeed: 8,
+        blockRows: 7
     }
 };
